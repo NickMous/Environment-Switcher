@@ -52,6 +52,12 @@ function mainThread(tabs) {
                         let button = clone.querySelector("button");
                         button.textContent = env.name;
                         button.dataset.envUrl = env.url;
+                        button.addEventListener("click", () => {
+                            browser.tabs.sendMessage(tab.id, {
+                                command: "changeEnv",
+                                env: env.url
+                            });
+                        });
                         switches.appendChild(clone);
                         break;
                     }
