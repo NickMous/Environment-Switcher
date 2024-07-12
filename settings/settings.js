@@ -3,7 +3,7 @@ function saveSettings(e) {
     var settings = {
         "name": document.getElementById("envName").value,
         "url": document.getElementById("envUrl").value,
-        "allowedOrigins": document.getElementById("envOrigins").value.split(","),
+        "allowedOrigins": document.getElementById("envOrigins").value.split(",").map((origin) => origin.trim()),
     };
     let existingSettings = browser.storage.sync.get("environments");
     existingSettings.then((result) => {
@@ -91,7 +91,7 @@ function onEditSubmit(e) {
     var settings = {
         "name": e.target.parentElement.parentElement.querySelector(".name").value,
         "url": e.target.parentElement.parentElement.querySelector(".url").value,
-        "allowedOrigins": e.target.parentElement.parentElement.querySelector(".origins").value.split(","),
+        "allowedOrigins": e.target.parentElement.parentElement.querySelector(".origins").value.split(",").map((origin) => origin.trim()),
     };
     let existingSettings = browser.storage.sync.get("environments");
     existingSettings.then((result) => {
