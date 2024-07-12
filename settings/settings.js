@@ -152,5 +152,64 @@ function verifyUrl(url) {
     return [true, "passed"];
 }
 
+function exportSettings() {
+    let existingSettings = browser.storage.sync.get("environments");
+    existingSettings.then((result) => {
+        existingSettings = result.environments;
+        if (existingSettings === undefined) {
+            existingSettings = [];
+            return;
+        }
+        existingSettings = JSON.parse(existingSettings);
+        let blob = new Blob([JSON.stringify(existingSettings)], { type: "application/json" });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "environments.json";
+        a.click();
+    });
+}
+
+function importSettings() {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = function(e) {
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let data = JSON.parse(e.target.result);
+            let existingSettings = browser.storage.sync.get("environments");
+            existingSettings.then((result) => {
+                existingSettings = result.environments;
+                if (existingSettings === undefined) {
+                    existingSettings = [];
+                } else {
+                    existingSettings = JSON.parse(existingSettings);
+                }
+                existingSettings = existingSettings.concat(data);
+                json = JSON.stringify(existingSettings);
+                browser.storage.sync.set({ "environments": json });
+                let envList = document.querySelector("#envList tbody");
+                for (let i = 0; i < data.length; i++) {
+                    let settings = data[i];
+                    let clone = document.getElementById("envTemplate").content.cloneNode(true);
+                    clone.querySelector("tr").setAttribute("data-index", existingSettings.length - 1);
+                    clone.querySelector(".name").textContent = settings.name;
+                    clone.querySelector(".url").textContent = settings.url;
+                    clone.querySelector(".origins").textContent = settings.allowedOrigins.join(", ");
+                    clone.querySelector("button.delete").addEventListener("click", onDelete);
+                    clone.querySelector("button.edit").addEventListener("click", onEdit);
+                    envList.appendChild(clone);
+                }
+            });
+        }
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
 document.getElementById("newEnvForm").addEventListener("submit", saveSettings);
 document.addEventListener("DOMContentLoaded", loadSettings);
+document.getElementById("export").addEventListener("click", exportSettings);
+document.getElementById("import").addEventListener("click", importSettings);
