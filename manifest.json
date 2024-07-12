@@ -1,15 +1,16 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Environment changer",
     "version": "0.1",
 
     "description": "Change the environment of the page to local, dev, staging or production.",
     "permissions": [
         "tabs",
-        "activeTab"
+        "activeTab",
+        "storage"
     ],
 
-    "browser_action": {
+    "action": {
         "default_popup": "popup/popup.html",
         "default_icon": "icons/icon.png",
         "default_title": "Change environment"
@@ -20,5 +21,16 @@
             "matches": ["<all_urls>"],
             "js": ["content_scripts/changeEnv.js"]
         }
-    ]
+    ],
+
+    "options_ui": {
+        "page": "settings/settings.html",
+        "open_in_tab": true
+    },
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "envswitcher@nickmous.com"
+        }
+    }
 }

@@ -1,0 +1,11 @@
+*{
+    box-sizing: border-box;
+}
+
+input, label {
+    display: block;
+}
+
+input {
+    margin-bottom: 10px;
+}

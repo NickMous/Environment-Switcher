@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | Environment Switcher</title>
+    <link rel="stylesheet" href="settings.css" />
+</head>
+
+<body>
+    <form id="newEnvForm">
+        <fieldset>
+            <legend>Add New Environment</legend>
+            <label for="envName">Environment Name (e.g. Local)</label>
+            <input type="text" id="envName" name="envName" required />
+            <label for="envUrl">Environment URL (e.g. http://webshop.ddev.site)</label>
+            <input type="text" id="envUrl" name="envUrl" required />
+            <label for="envOrigins">Allowed Domains (divide with [, ], e.g. nickmous.com,
+                nickmous.nl)</label>
+            <input type="text" id="envOrigins" name="envOrigins" required />
+            <button type="submit">Add</button>
+        </fieldset>
+    </form>
+    <table id="envList">
+        <thead>
+            <tr>
+                <th>Environment Name</th>
+                <th>Environment URL</th>
+                <th>Allowed Domains</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="settings.js"></script>
+    <template id="envTemplate">
+        <tr>
+            <td class="name"></td>
+            <td class="url"></td>
+            <td class="origins"></td>
+            <td>
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
+            </td>
+        </tr>
+    </template>
+    <template id="editEnvTemplate">
+        <tr class="editEnv">
+            <td><input type="text" class="name" required /></td>
+            <td><input type="text" class="url" required /></td>
+            <td><input type="text" class="origins" required /></td>
+            <td>
+                <button class="save">Save</button>
+                <button class="cancel">Cancel</button>
+            </td>
+        </tr>
+    </template>
+</body>
+
+</html>
