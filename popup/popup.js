@@ -35,9 +35,6 @@ function listenForClicks() {
 }
 
 function mainThread(tabs) {
-    for (let tab of tabs) {
-        console.log(tab);
-    }
     let envs = browser.storage.sync.get("environments");
     envs.then((result) => {
         let envs = JSON.parse(result.environments);
@@ -45,7 +42,6 @@ function mainThread(tabs) {
         if (envs) {
             document.querySelector("#no-switch").classList.add("hidden");
             for (let env of envs) {
-                console.log(env);
                 for (let origin of env.allowedOrigins) {
                     if (tab.url.includes(origin)) {
                         let clone = document.getElementById("switch-template").content.cloneNode(true);

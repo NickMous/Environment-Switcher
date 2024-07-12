@@ -3,7 +3,6 @@ function saveSettings(e) {
     let url = document.getElementById("envUrl").value;
     let [valid, error] = verifyUrl(url.trim());
     if (!valid) {
-        console.log(valid);
         alert(error);
         return;
     }
@@ -81,7 +80,6 @@ function onEdit(e) {
         existingSettings = JSON.parse(existingSettings);
         let clone = document.getElementById("editEnvTemplate").content.cloneNode(true);
         let settings = existingSettings[index];
-        console.log(clone);
         clone.querySelector("tr").setAttribute("data-index", index);
         clone.querySelector(".name").value = settings.name;
         clone.querySelector(".url").value = settings.url;
@@ -141,7 +139,6 @@ function onEditCancel(e) {
 }
 
 function verifyUrl(url) {
-    console.log(url);
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
         return [false, "URL must start with http:// or https://"];
     } else if (url.endsWith("/")) {
