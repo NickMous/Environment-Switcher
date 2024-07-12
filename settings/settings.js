@@ -1,14 +1,15 @@
 function saveSettings(e) {
     e.preventDefault();
     let url = document.getElementById("envUrl").value;
-    let valid, error = verifyUrl(url);
+    let [valid, error] = verifyUrl(url.trim());
     if (!valid) {
+        console.log(valid);
         alert(error);
         return;
     }
     var settings = {
         "name": document.getElementById("envName").value,
-        "url": document.getElementById("envUrl").value,
+        "url": document.getElementById("envUrl").value.trim(),
         "allowedOrigins": document.getElementById("envOrigins").value.split(",").map((origin) => origin.trim()),
     };
     let existingSettings = browser.storage.sync.get("environments");
@@ -93,14 +94,14 @@ function onEdit(e) {
 
 function onEditSubmit(e) {
     let index = e.target.parentElement.parentElement.getAttribute("data-index");
-    let valid, error = verifyUrl(e.target.parentElement.parentElement.querySelector(".url").value);
+    let [valid, error] = verifyUrl(e.target.parentElement.parentElement.querySelector(".url").value.trim());
     if (!valid) {
         alert(error);
         return;
     }
     var settings = {
         "name": e.target.parentElement.parentElement.querySelector(".name").value,
-        "url": e.target.parentElement.parentElement.querySelector(".url").value,
+        "url": e.target.parentElement.parentElement.querySelector(".url").value.trim(),
         "allowedOrigins": e.target.parentElement.parentElement.querySelector(".origins").value.split(",").map((origin) => origin.trim()),
     };
     let existingSettings = browser.storage.sync.get("environments");
@@ -140,16 +141,15 @@ function onEditCancel(e) {
 }
 
 function verifyUrl(url) {
-    if (!url.startsWith("http://") || !url.startsWith("https://")) {
-        return false, "URL must start with http:// or https://";
+    console.log(url);
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        return [false, "URL must start with http:// or https://"];
     } else if (url.endsWith("/")) {
-        return false, "URL must not end with a forward slash";
-    } else if (url.includes(" ")) {
-        return false, "URL must not contain spaces";
+        return [false, "URL must not end with a forward slash"];
     } else if (!url.includes(".")) {
-        return false, "URL must contain a period to be valid";
+        return [false, "URL must contain a period to be valid"];
     }
-    return true, "";
+    return [true, "passed"];
 }
 
 document.getElementById("newEnvForm").addEventListener("submit", saveSettings);
