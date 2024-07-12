@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+    "name": "Environment changer",
+    "version": "0.1",
+
+    "description": "Change the environment of the page to local, dev, staging or production.",
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ],
+
+    "browser_action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": "icons/icon.png",
+        "default_title": "Change environment"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content_scripts/changeEnv.js"]
+        }
+    ]
+}
