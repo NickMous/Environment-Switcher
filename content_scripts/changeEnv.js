@@ -1,4 +1,5 @@
 (() => {
+    console.log("changeEnv.js loaded");
     if (window.hasRun) {
         return;
     }

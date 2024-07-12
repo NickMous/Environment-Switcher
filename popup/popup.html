@@ -12,54 +12,21 @@
     <div id="popup-content">
         <h1>Environment switcher</h1>
         <p>Choose the environment you want to switch to:</p>
-        <button>Live</button>
-        <button>Local</button>
-        <button>accept01</button>
-        <button>accept02</button>
-        <button>accept03</button>
-        <button>accept04</button>
-        <button>accept05</button>
-        <button>accept06</button>
-        <button>accept07</button>
-        <button>accept08</button>
-        <button>accept09</button>
-        <button>accept10</button>
-        <button>accept11</button>
-        <button>accept12</button>
-        <button>accept13</button>
-        <button>accept14</button>
-        <button>accept15</button>
-        <button>accept16</button>
-        <button>accept17</button>
-        <button>accept18</button>
-        <button>accept19</button>
-        <button>accept20</button>
-        <button>accept21</button>
-        <button>accept22</button>
-        <button>accept23</button>
-        <button>accept24</button>
-        <button>accept25</button>
-        <button>accept26</button>
-        <button>accept27</button>
-        <button>accept28</button>
-        <button>accept29</button>
-        <button>accept30</button>
-        <button>accept31</button>
-        <button>accept32</button>
-        <button>accept33</button>
-        <button>accept34</button>
-        <button>accept35</button>
-        <button>accept36</button>
-        <button>accept37</button>
-        <button>accept38</button>
-        <button>accept39</button>
-        <button>accept40</button>
+        <div id="switches"></div>
+        <div id="no-switch">
+            <p>No switch available</p>
+            <p>Try a different page, or edit the settings!</p>
+        </div>
+        <button id="settings-button">Environment settings</button>
     </div>
     <div id="error-content" class="hidden">
         <p>Can't switch on this page.</p>
         <p>Try a different page.</p>
-      </div>
-      <script src="popup.js"></script>
+    </div>
+    <template id="switch-template">
+        <button></button>
+    </template>
+    <script src="popup.js"></script>
 </body>
 
 </html>
