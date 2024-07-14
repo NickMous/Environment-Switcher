@@ -2,8 +2,8 @@
     "manifest_version": 3,
     "name": "Environment switcher",
     "short_name": "Env switcher",
-    "version": "0.1",
-    "version_name": "0.1 Beta",
+    "version": "0.2",
+    "version_name": "0.2 Beta",
     "author": "Sander den Hollander",
     "homepage_url": "https://github.com/NickMous/Environment-Switcher",
     "developer": {
