@@ -4,7 +4,6 @@
     "short_name": "Env switcher",
     "version": "0.1",
     "version_name": "0.1 Beta",
-    "default_locale": "en",
     "author": "Sander den Hollander",
     "homepage_url": "https://github.com/NickMous/Environment-Switcher",
     "developer": {
