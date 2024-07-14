@@ -1,6 +1,4 @@
-let tab = 0;
-
-function mainThread(tabs) {
+function mainThread(url, tabId) {
     let envs = browser.storage.local.get("environments");
     envs.then((result) => {
         let envs = JSON.parse(result.environments);
@@ -9,16 +7,18 @@ function mainThread(tabs) {
             document.querySelector("#no-switch").classList.add("hidden");
             for (let env of envs) {
                 for (let origin of env.allowedOrigins) {
-                    if (tab.url.includes(origin)) {
+                    if (url.includes(origin)) {
                         let clone = document.getElementById("switch-template").content.cloneNode(true);
                         let button = clone.querySelector("button");
                         button.textContent = env.name;
                         button.dataset.envUrl = env.url;
                         button.addEventListener("click", () => {
-                            browser.tabs.sendMessage(tab.id, {
+                            browser.tabs.sendMessage(tabId, {
                                 command: "changeEnv",
                                 env: env.url
                             });
+                            switches.innerHTML = "";
+                            mainThread(env.url, tabId);
                         });
                         switches.appendChild(clone);
                         break;
@@ -40,8 +40,7 @@ function reportExecuteScriptError(error) {
 
 browser.tabs.query({ active: true, currentWindow: true })
     .then((tabs) => {
-        tab = tabs[0];
-        mainThread(tabs);
+        mainThread(tabs[0].url, tabs[0].id);
     })
     .catch(reportExecuteScriptError);
 
