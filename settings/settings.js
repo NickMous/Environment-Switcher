@@ -11,7 +11,7 @@ function saveSettings(e) {
         "url": document.getElementById("envUrl").value.trim(),
         "allowedOrigins": document.getElementById("envOrigins").value.split(",").map((origin) => origin.trim()),
     };
-    let existingSettings = browser.storage.sync.get("environments");
+    let existingSettings = browser.storage.local.get("environments");
     existingSettings.then((result) => {
         existingSettings = result.environments;
         if (existingSettings === undefined) {
@@ -22,7 +22,7 @@ function saveSettings(e) {
         existingSettings.push(settings);
         
         json = JSON.stringify(existingSettings);
-        browser.storage.sync.set({ "environments": json });
+        browser.storage.local.set({ "environments": json });
         let envList = document.querySelector("#envList tbody");
         let clone = document.getElementById("envTemplate").content.cloneNode(true);
         clone.querySelector("tr").setAttribute("data-index", existingSettings.length - 1);
@@ -36,7 +36,7 @@ function saveSettings(e) {
 }
 
 function loadSettings() {
-    let existingSettings = browser.storage.sync.get("environments");
+    let existingSettings = browser.storage.local.get("environments");
     existingSettings.then((result) => {
         existingSettings = result.environments;
         if (existingSettings === undefined) {
@@ -61,20 +61,20 @@ function loadSettings() {
 
 function onDelete(e) {
     let index = e.target.parentElement.parentElement.getAttribute("data-index");
-    let existingSettings = browser.storage.sync.get("environments");
+    let existingSettings = browser.storage.local.get("environments");
     existingSettings.then((result) => {
         existingSettings = result.environments;
         existingSettings = JSON.parse(existingSettings);
         existingSettings.splice(index, 1);
         json = JSON.stringify(existingSettings);
-        browser.storage.sync.set({ "environments": json });
+        browser.storage.local.set({ "environments": json });
         e.target.parentElement.parentElement.remove();
     });
 }
 
 function onEdit(e) {
     let index = e.target.parentElement.parentElement.getAttribute("data-index");
-    let existingSettings = browser.storage.sync.get("environments");
+    let existingSettings = browser.storage.local.get("environments");
     existingSettings.then((result) => {
         existingSettings = result.environments;
         existingSettings = JSON.parse(existingSettings);
@@ -102,13 +102,13 @@ function onEditSubmit(e) {
         "url": e.target.parentElement.parentElement.querySelector(".url").value.trim(),
         "allowedOrigins": e.target.parentElement.parentElement.querySelector(".origins").value.split(",").map((origin) => origin.trim()),
     };
-    let existingSettings = browser.storage.sync.get("environments");
+    let existingSettings = browser.storage.local.get("environments");
     existingSettings.then((result) => {
         existingSettings = result.environments;
         existingSettings = JSON.parse(existingSettings);
         existingSettings[index] = settings;
         json = JSON.stringify(existingSettings);
-        browser.storage.sync.set({ "environments": json });
+        browser.storage.local.set({ "environments": json });
         let envList = document.querySelector("#envList tbody");
         let clone = document.getElementById("envTemplate").content.cloneNode(true);
         clone.querySelector("tr").setAttribute("data-index", index);
@@ -123,7 +123,7 @@ function onEditSubmit(e) {
 
 function onEditCancel(e) {
     let index = e.target.parentElement.parentElement.getAttribute("data-index");
-    let existingSettings = browser.storage.sync.get("environments");
+    let existingSettings = browser.storage.local.get("environments");
     existingSettings.then((result) => {
         existingSettings = JSON.parse(result.environments);
         let clone = document.getElementById("envTemplate").content.cloneNode(true);
@@ -150,7 +150,7 @@ function verifyUrl(url) {
 }
 
 function exportSettings() {
-    let existingSettings = browser.storage.sync.get("environments");
+    let existingSettings = browser.storage.local.get("environments");
     existingSettings.then((result) => {
         existingSettings = result.environments;
         if (existingSettings === undefined) {
@@ -176,7 +176,7 @@ function importSettings() {
         let reader = new FileReader();
         reader.onload = function(e) {
             let data = JSON.parse(e.target.result);
-            let existingSettings = browser.storage.sync.get("environments");
+            let existingSettings = browser.storage.local.get("environments");
             existingSettings.then((result) => {
                 existingSettings = result.environments;
                 if (existingSettings === undefined) {
@@ -186,7 +186,7 @@ function importSettings() {
                 }
                 existingSettings = existingSettings.concat(data);
                 json = JSON.stringify(existingSettings);
-                browser.storage.sync.set({ "environments": json });
+                browser.storage.local.set({ "environments": json });
                 let envList = document.querySelector("#envList tbody");
                 for (let i = 0; i < data.length; i++) {
                     let settings = data[i];

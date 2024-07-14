@@ -35,7 +35,7 @@ function listenForClicks() {
 }
 
 function mainThread(tabs) {
-    let envs = browser.storage.sync.get("environments");
+    let envs = browser.storage.local.get("environments");
     envs.then((result) => {
         let envs = JSON.parse(result.environments);
         let switches = document.querySelector("#switches");
